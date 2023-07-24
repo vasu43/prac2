@@ -1,0 +1,37 @@
+name: reusable_copy_file
+
+on:
+  workflow_call:
+    inputs:
+            filename:
+              required: true
+              type: string
+            path: 
+              required: true
+              type: string
+            working_dir:
+              required: true
+              type: string
+        # target:
+        #   required: true
+        #   type: string
+                      
+jobs:
+  copying_file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: making_directory
+        run: |
+              pwd
+              mkdir ${{ github.event.inputs.working_dir }}/source
+              mkdir ${{ github.event.inputs.working_dir }}/target
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi.txt
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi1.txt
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi2.txt
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi3.txt
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi4.txt
+              echo "hello" > ${{ github.event.inputs.working_dir }}/source/hi5.txt
+        shell: bash
+
+      - name: copying_file
+        run: bash ./script.sh ${{github.event.inputs.path}}/${{github.event.inputs.filename}} ${{github.event.inputs.working_dir}}/target

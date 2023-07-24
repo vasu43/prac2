@@ -1,0 +1,57 @@
+name: Copy Local File
+
+on: 
+    workflow_dispatch: 
+        inputs:
+            
+                filename:
+
+                        required: true
+                        type: string
+                        description: what to copy
+                path: 
+
+                        required: true
+                        type: string
+                        description: from where to copy
+
+env:
+    workspace_git: ${{ github.workspace }}
+
+jobs: 
+    #show_variables_values:
+    #    runs-on: ubuntu-latest
+    #    steps:
+    #        - name: show variables
+    #          run: |
+    #            echo "hello"    
+    #            cat ${{ env.workspace_git }}/README.md
+    #            echo ${{ env.workspace_git }}
+    #            
+    #          shell: bash
+    copy: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: make directory and files
+              run: |
+                    pwd
+                    mkdir ${{ env.workspace_git }}/source
+                    mkdir ${{ env.workspace_git }}/target
+                    echo "hello" > ${{ env.workspace_git }}/source/hi.txt
+                    echo "hello" > ${{ env.workspace_git }}/source/hi1.txt
+                    echo "hello" > ${{ env.workspace_git }}/source/hi2.txt
+                    echo "hello" > ${{ env.workspace_git }}/source/hi3.txt
+                    echo "hello" > ${{ env.workspace_git }}/source/hi4.txt
+                    echo "hello" > ${{ env.workspace_git }}/source/hi5.txt
+              shell: bash
+                 
+            - name: copy
+              run: |
+                    if test -f "${{ env.workspace_git }}/source/${{github.event.inputs.filename}}";  then
+                        cp ${{ env.workspace_git }}/source/${{github.event.inputs.filename}} ${{env.GH_WS}}/target/
+                    else
+                        echo "file dosen't exit"
+                    fi
+              env:
+                GH_WS: ${{ env.workspace_git }}
+              shell: bash

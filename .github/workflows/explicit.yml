@@ -1,0 +1,28 @@
+name: explicit_call
+
+on: 
+    workflow_dispatch: 
+        inputs:
+            filename:
+                required: true
+                type: string
+                description: what to copy
+            path: 
+                required: true
+                type: string
+                description: from where to copy
+
+env:
+    workspace_git: ${{ github.workspace }}
+
+jobs: 
+    call_action:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ./.github/workflows/action.yml
+              with: 
+                filename: ${{github.event.inputs.filename}}
+                path: ${{env.workspace_git}}/${{github.event.inputs.path}}
+                working_dir: ${{env.workspace_git}}
+                # target: ${{env.workspace_git}}
