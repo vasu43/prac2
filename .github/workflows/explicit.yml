@@ -20,7 +20,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: ./.github/workflows/action.yml
+            - uses: vasu43/prac2/.github/workflows/action.yml
               with: 
                 filename: ${{github.event.inputs.filename}}
                 path: ${{env.workspace_git}}/${{github.event.inputs.path}}
